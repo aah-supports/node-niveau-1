@@ -226,6 +226,20 @@ async function readJsonSafe(path) {
 }</code></pre>
 
 <h2>6. Structurer Campus Quest (CLI)</h2>
+<h3>C'est quoi Campus Quest ?</h3>
+<p>Campus Quest est un mini-jeu en ligne de commande. Vous devez coder une CLI qui manipule deux fichiers JSON (<code>players.json</code> et <code>quests.json</code>) pour simuler la progression d'un joueur.</p>
+<div class="callout">
+<p><strong>Ce que vous devez faire concrètement</strong></p>
+<ol>
+<li>Créer un joueur (pseudo unique).</li>
+<li>Lui attribuer une ou plusieurs quêtes existantes.</li>
+<li>Valider une quête pour ajouter de l'XP.</li>
+<li>Afficher ses stats (XP, niveau, quêtes) puis un classement simple.</li>
+</ol>
+</div>
+<p><strong>Entrée</strong> : commandes terminal (ex: <code>node src/cli.js create-player Alice</code>).<br>
+<strong>Sortie</strong> : messages CLI lisibles + données persistées correctement dans les JSON.</p>
+
 <h3>Arborescence cible</h3>
 <pre><code>campus-quest/
   package.json
