@@ -1,6 +1,52 @@
 [
-  { "id": "q1", "title": "Installer Node.js", "difficulty": "easy", "xp": 10 },
-  { "id": "q2", "title": "Lire un fichier JSON", "difficulty": "easy", "xp": 15 },
-  { "id": "q3", "title": "Calculer une moyenne CSV", "difficulty": "medium", "xp": 25 },
-  { "id": "q4", "title": "Créer une CLI robuste", "difficulty": "hard", "xp": 40 }
+  {
+    "id": "q-js-001",
+    "type": "enigme",
+    "title": "Const et reassignment",
+    "difficulty": "easy",
+    "question": "Je suis declare avec const. Puis-je etre reassigne ?",
+    "hint": "Repondre par oui ou non.",
+    "answer": "non",
+    "xp": 20
+  },
+  {
+    "id": "q-node-002",
+    "type": "enigme",
+    "title": "Arguments CLI en Node.js",
+    "difficulty": "easy",
+    "question": "Quel objet contient les arguments CLI en Node.js ?",
+    "hint": "Il commence par process.",
+    "answer": "process.argv",
+    "xp": 25
+  },
+  {
+    "id": "q-api-003",
+    "type": "enigme",
+    "title": "Creation d'une ressource HTTP",
+    "difficulty": "medium",
+    "question": "Quel verbe HTTP utilise-t-on pour creer une ressource ?",
+    "hint": "4 lettres en majuscule.",
+    "answer": "post",
+    "xp": 30
+  },
+  {
+    "id": "q-node-004",
+    "type": "enigme",
+    "title": "Lecture fichier asynchrone",
+    "difficulty": "medium",
+    "question": "Quel module natif moderne utilises-tu pour readFile avec import ?",
+    "hint": "Format node:.../promises",
+    "answer": "node:fs/promises",
+    "xp": 35
+  },
+  {
+    "id": "q-archi-005",
+    "type": "enigme",
+    "title": "Role de store.js",
+    "difficulty": "hard",
+    "question": "Quel fichier du projet gere la lecture/ecriture JSON ?",
+    "hint": "Il est dans src.",
+    "answer": "store.js",
+    "xp": 40
+  }
 ]

@@ -15,7 +15,7 @@ Commandes:
   npm start -- list-quests
   npm start -- create-player <pseudo>
   npm start -- add-quest <pseudo> <questId>
-  npm start -- complete-quest <pseudo> <questId>
+  npm start -- complete-quest <pseudo> <questId> <reponse>
   npm start -- stats <pseudo>
   npm start -- leaderboard
   npm start -- reset
@@ -46,8 +46,9 @@ async function main() {
         break;
       }
       case "complete-quest": {
-        const { player, quest } = await completeQuest(args[0], args[1]);
-        console.log(`Quête validée: ${quest.id} | XP=${player.xp} | Niveau=${player.level}`);
+        const answer = args.slice(2).join(" ");
+        const { player, quest } = await completeQuest(args[0], args[1], answer);
+        console.log(`Quête validée: ${quest.id} | +${quest.xp} XP | Total XP=${player.xp} | Niveau=${player.level}`);
         break;
       }
       case "stats": {

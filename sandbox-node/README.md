@@ -44,11 +44,16 @@ docker compose down
 npm start -- reset
 npm start -- list-quests
 npm start -- create-player Alice
-npm start -- add-quest Alice q1
-npm start -- complete-quest Alice q1
+npm start -- add-quest Alice q-node-002
+npm start -- complete-quest Alice q-node-002 process.argv
 npm start -- stats Alice
 npm start -- leaderboard
 ```
+
+Notes:
+
+- `add-quest` n'accorde pas d'XP, elle met seulement la quête en actif.
+- `complete-quest` accorde l'XP uniquement si la réponse est correcte.
 
 ## Points couverts par la correction
 

@@ -7,6 +7,14 @@ function normalizePseudo(pseudo) {
   return pseudo.trim().toLowerCase();
 }
 
+function normalizeAnswer(answer) {
+  return answer
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
+}
+
 function levelFromXp(xp) {
   if (xp >= 80) return 4;
   if (xp >= 45) return 3;
@@ -15,7 +23,8 @@ function levelFromXp(xp) {
 }
 
 export async function listQuests() {
-  return loadJson(QUESTS_PATH);
+  const quests = await loadJson(QUESTS_PATH);
+  return quests.map(({ answer, ...quest }) => quest);
 }
 
 export async function createPlayer(pseudoInput) {
@@ -75,10 +84,10 @@ export async function acceptQuest(pseudoInput, questId) {
   return { player, quest };
 }
 
-export async function completeQuest(pseudoInput, questId) {
+export async function completeQuest(pseudoInput, questId, answerInput) {
   const pseudo = normalizePseudo(pseudoInput || "");
   if (!pseudo || !questId) {
-    throw new Error("Usage: complete-quest <pseudo> <questId>");
+    throw new Error("Usage: complete-quest <pseudo> <questId> <reponse>");
   }
 
   const [players, quests] = await Promise.all([
@@ -94,6 +103,17 @@ export async function completeQuest(pseudoInput, questId) {
 
   if (!player.activeQuests.includes(questId)) {
     throw new Error(`Quête non active pour ce joueur : ${questId}`);
+  }
+
+  if (quest.type === "enigme") {
+    if (!answerInput || !answerInput.trim()) {
+      throw new Error("Réponse requise pour valider cette quête.");
+    }
+    const expected = normalizeAnswer(String(quest.answer || ""));
+    const actual = normalizeAnswer(answerInput);
+    if (!expected || actual !== expected) {
+      throw new Error("Mauvaise réponse. La quête reste active.");
+    }
   }
 
   player.activeQuests = player.activeQuests.filter((id) => id !== questId);
