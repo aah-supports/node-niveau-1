@@ -98,6 +98,14 @@ npm init -y</code></pre>
 npm pkg set scripts.start=\"node src/index.js\"
 npm pkg set scripts.dev=\"node --watch src/index.js\"</code></pre>
 <p>Le champ <code>type: "module"</code> est nécessaire pour utiliser <code>import</code> dans les exemples du cours.</p>
+<div class="callout">
+<p><strong>Pourquoi écrire <code>node:</code> dans les imports ?</strong></p>
+<ul>
+<li><code>node:</code> indique explicitement qu'on importe un module natif de Node.js (<code>node:fs/promises</code>, <code>node:path</code>, etc.).</li>
+<li>Ça évite les ambiguïtés avec un package npm du même nom.</li>
+<li>C'est la forme recommandée dans la documentation Node moderne pour rendre l'intention claire dans le code.</li>
+</ul>
+</div>
 
 <h3>Étape 5 - Créer le point d'entrée et lancer</h3>
 <pre><code>mkdir src
