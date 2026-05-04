@@ -135,6 +135,20 @@ services:
     </section>
 
     <section>
+      <h2>Termes à connaître (compose)</h2>
+      <table>
+        <thead><tr><th>Terme</th><th>Explication</th></tr></thead>
+        <tbody>
+          <tr><td><code>command</code></td><td>Commande lancée au démarrage du conteneur.</td></tr>
+          <tr><td><code>PID 1</code></td><td>Processus principal ; s'il s'arrête, le conteneur s'arrête.</td></tr>
+          <tr><td><code>tail -f /dev/null</code></td><td>Commande infinie utilisée ici pour garder le conteneur vivant.</td></tr>
+          <tr><td><code>stdin_open: true</code></td><td>Garde l'entrée standard ouverte pour les interactions terminal.</td></tr>
+          <tr><td><code>tty: true</code></td><td>Alloue un pseudo-terminal (affichage shell plus lisible).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
       <h2>sandbox-node : commandes expliquées</h2>
       <pre><code># depuis la racine du projet
 cd sandbox-node
