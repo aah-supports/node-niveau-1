@@ -243,6 +243,21 @@ console.log("Fin sync");
 <li>Renvoyer <code>500</code> pour les erreurs imprévues (lecture/écriture, JSON invalide).</li>
 </ol>
 <p><strong>Résultat attendu</strong> : format homogène des erreurs API, par exemple <code>{ "error": "..." }</code>.</p>
+<p><strong>Exemple minimal</strong></p>
+<pre><code>app.post("/enigmes/:id/answer", async (req, res) => {
+  try {
+    const { playerId, answer } = req.body;
+    if (!playerId || !answer) {
+      return res.status(400).json({ error: "playerId and answer are required" });
+    }
+
+    // logique métier + lecture/écriture JSON
+    return res.status(200).json({ correct: true, gainedXp: 20, totalXp: 40 });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "internal server error" });
+  }
+});</code></pre>
 
 <h2>7. Checklist de fin de journée</h2>
 <div class="check">
