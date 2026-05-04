@@ -161,26 +161,17 @@ console.log("D");
 // C promise
 // B timeout</code></pre>
 <p><strong>Pourquoi ?</strong> Le synchrone passe d'abord (<code>A</code>, <code>D</code>), puis les microtasks (Promise), puis les <span class="term" tabindex="0" data-def="Tâches planifiées ensuite, par exemple setTimeout et setInterval.">macrotasks</span> (timeout).</p>
-<h3>Liste claire : microtasks vs macrotasks</h3>
-<p><strong>Microtasks (prioritaires)</strong> :</p>
-<ul>
-<li><code>Promise.then/catch/finally</code></li>
-<li><code>await</code> (la suite après résolution de la Promise)</li>
-<li><code>queueMicrotask(...)</code></li>
-</ul>
-<p><strong>Macrotasks (tour suivant de boucle)</strong> :</p>
-<ul>
-<li><code>setTimeout(...)</code> même avec <code>0</code></li>
-<li><code>setInterval(...)</code></li>
-<li>callbacks I/O (fichiers, réseau)</li>
-<li><code>setImmediate(...)</code> (Node.js)</li>
-</ul>
-<p><strong>Note Node.js</strong> : <code>process.nextTick(...)</code> est encore prioritaire (file spéciale) et passe avant les microtasks Promise.</p>
-<h3>Illustration : un tour de boucle</h3>
-<div class="schema-wrap">
-  <img src="assets/event-loop-tour-boucle.svg" alt="Schéma d'un tour de boucle event loop">
-</div>
-<p>Lecture rapide : à chaque tour, Node prend une tâche prête, exécute son callback, vide les microtasks, puis passe au tour suivant. La durée n'est pas fixe.</p>
+<h3>Différence simple : microtasks vs macrotasks</h3>
+<p><strong>Microtask</strong> = priorité haute, exécutée juste après le code courant.<br>
+<strong>Macrotask</strong> = exécutée ensuite (pas immédiatement).</p>
+<table>
+<thead><tr><th>Type</th><th>APIs typiques</th><th>Quand ça passe</th></tr></thead>
+<tbody>
+<tr><td>Microtask</td><td><code>Promise.then/catch/finally</code>, <code>await</code>, <code>queueMicrotask</code></td><td>Avant les macrotasks</td></tr>
+<tr><td>Macrotask</td><td><code>setTimeout</code>, <code>setInterval</code>, callbacks I/O, <code>setImmediate</code></td><td>Après les microtasks</td></tr>
+</tbody>
+</table>
+<p><strong>Note Node.js</strong> : <code>process.nextTick(...)</code> est encore plus prioritaire que les microtasks Promise.</p>
 
 <h3>Piège classique : bloquer la boucle</h3>
 <pre><code>const start = Date.now();
