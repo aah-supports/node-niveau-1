@@ -59,7 +59,10 @@ pre {
 }
 
 pre code {
+  background: transparent !important;
+  padding: 0 !important;
   color: inherit !important;
+  border-radius: 0 !important;
 }
 
 table, th, td {
