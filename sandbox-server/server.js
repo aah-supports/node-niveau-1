@@ -4,7 +4,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.get("/", (_req, res) => {
-  res.send("Sandbox Node.js + Docker opérationnel");
+  res.send("Hello lessss Fast Track !!!");
 });
 
 app.get("/health", (_req, res) => {

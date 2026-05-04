@@ -25,3 +25,12 @@ docker compose down
 ```bash
 docker compose logs -f
 ```
+
+
+## Commandes 
+
+```bash
+docker compose down        # stoppe et supprime les conteneurs existants
+docker compose build --no-cache  # rebuild l’image en prenant en compte tes modifs
+docker compose up -d      # relance les conteneurs en arrière-plan
+```
