@@ -127,45 +127,45 @@ console.log(avg.toFixed(2));</code></pre>
     </section>
 
     <section>
-      <h2>C'est quoi sandbox-server ?</h2>
+      <h2>C'est quoi Campus Quest ?</h2>
       <div class="card">
-        <p>Une API JSON minimale avec Express :</p>
+        <p>Un jeu d'énigmes et de résolution de problèmes, exposé via une API JSON :</p>
         <ol>
-          <li>Démarrer le serveur Node.js</li>
-          <li>Créer des routes HTTP</li>
-          <li>Retourner des réponses JSON propres</li>
-          <li>Tester les endpoints avec un client API</li>
+          <li>Recevoir une énigme</li>
+          <li>Proposer une réponse</li>
+          <li>Résoudre un problème pour gagner de l'XP</li>
+          <li>Suivre la progression et le classement</li>
         </ol>
       </div>
       <div class="card" style="margin-top:12px">
-        <p><strong>Une route API</strong> = une URL + une méthode HTTP + une réponse JSON.</p>
-        <p class="small">Exemple : <code>GET /health</code> renvoie <code>{ "status": "ok" }</code>.</p>
+        <p><strong>Dans <code>sandbox-server</code></strong>, chaque action passe par une route API (URL + méthode HTTP + JSON).</p>
+        <p class="small">Exemple : <code>POST /enigmes/:id/reponse</code> valide une tentative de réponse.</p>
       </div>
-      <p class="small">Livrable J1 : une API JSON exécutable de bout en bout dans <code>sandbox-server</code>.</p>
+      <p class="small">Livrable J1 : une API JSON exécutable de bout en bout autour du jeu Campus Quest.</p>
     </section>
 
     <section>
       <h2>Qui fait quoi ? (flux réel)</h2>
       <div class="card">
-        <p><code>node src/cli.js create-player Alice</code></p>
+        <p><code>POST /players</code> avec <code>{ "name": "Alice" }</code></p>
         <ol>
-          <li><code>cli.js</code> lit la commande</li>
+          <li><code>server.js</code> reçoit la requête HTTP</li>
           <li><code>game-service.js</code> applique les règles</li>
           <li><code>store.js</code> lit/écrit les JSON</li>
-          <li><code>cli.js</code> affiche le résultat</li>
+          <li>Le serveur renvoie une réponse JSON</li>
         </ol>
       </div>
     </section>
 
     <section>
-      <h2>cli.js : exemple minimal</h2>
-      <pre><code class="language-js">const [, , command, name] = process.argv;
-
-if (command === "hello") console.log(`Bonjour ${name ?? "inconnu"}`);
-else if (command === "help" || !command) console.log("Usage: node src/cli.js hello &lt;prenom&gt;");
-else { console.log(`Commande inconnue: ${command}`); process.exitCode = 1; }</code></pre>
-      <p class="small">Idée clé : lire les arguments, choisir la commande, afficher un résultat.</p>
-      <p class="small">Les 2 premières cases de <code>process.argv</code> sont ignorées (node + chemin du script).</p>
+      <h2>server.js : exemple minimal</h2>
+      <pre><code class="language-js">app.post("/players", (req, res) => {
+  const { name } = req.body;
+  if (!name) return res.status(400).json({ error: "name is required" });
+  res.status(201).json({ id: "p1", name, xp: 0 });
+});</code></pre>
+      <p class="small">Idée clé : lire les données de la requête, appliquer la validation, renvoyer un JSON.</p>
+      <p class="small">Même logique métier, déclenchée par HTTP avec des réponses JSON cohérentes.</p>
     </section>
 
     <section>
@@ -189,7 +189,7 @@ async function saveJson(path, data) {
         <div class="card"><strong>Niveau 1</strong><p class="small">Store JSON + helpers</p></div>
         <div class="card"><strong>Niveau 2</strong><p class="small">Logique métier XP/quêtes</p></div>
       </div>
-      <div class="card" style="margin-top:12px"><strong>Niveau 3</strong><p class="small">Robustesse CLI + messages d'erreur</p></div>
+      <div class="card" style="margin-top:12px"><strong>Niveau 3</strong><p class="small">Robustesse API + messages d'erreur</p></div>
     </section>
 
     <section>

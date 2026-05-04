@@ -65,7 +65,7 @@ hr{border:none;border-top:1px solid #dfe6e9;margin:24px 0}
 <li><strong>npm</strong> : dépendances, scripts, distribution de packages.</li>
 </ul>
 <hr>
-<h2>JOUR 1 — Fondations Node.js et CLI gamifiée</h2>
+<h2>JOUR 1 — Fondations Node.js et API gamifiée</h2>
 <hr>
 <h3>Module 1 : Installation et prise en main</h3>
 <p><strong>Objectifs</strong> : comprendre Node.js, installer l'environnement, lancer ses premières commandes.</p>
@@ -92,16 +92,16 @@ hr{border:none;border-top:1px solid #dfe6e9;margin:24px 0}
 <li>Écriture et lecture JSON</li>
 </ul>
 
-<h3>Module 4 : Défis CLI (gamification)</h3>
-<p><strong>Objectifs</strong> : livrer une première version jouable en terminal.</p>
+<h3>Module 4 : Défis API (gamification)</h3>
+<p><strong>Objectifs</strong> : livrer une première version jouable via serveur.</p>
 <ul>
-<li>Commande <code>create-player</code></li>
-<li>Commande <code>accept-quest</code></li>
-<li>Commande <code>complete-quest</code></li>
-<li>Commande <code>show-stats</code></li>
+<li>Route <code>POST /players</code></li>
+<li>Route <code>POST /quests/:id/accept</code></li>
+<li>Route <code>POST /quests/:id/solve</code></li>
+<li>Route <code>GET /leaderboard</code></li>
 </ul>
 <p><strong>Défi</strong> : système de points (bronze, argent, or) selon la qualité du code et la gestion des erreurs.</p>
-<p><strong>Livrable fin J1</strong> : CLI Campus Quest fonctionnelle avec stockage JSON.</p>
+<p><strong>Livrable fin J1</strong> : API Campus Quest fonctionnelle avec stockage JSON.</p>
 <hr>
 <h2>JOUR 2 — API REST gamifiée avec Express</h2>
 <hr>

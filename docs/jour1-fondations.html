@@ -43,9 +43,9 @@ th{background:#f1f2f6}
   <a href="plan-de-cours.html">Plan détaillé</a>
   <a href="jour2-api-express.html">Aller au Jour 2 →</a>
 </div>
-<h1>Jour 1 - Fondations Node.js et CLI gamifiée</h1>
-<p><strong>Objectif du jour</strong> : comprendre Node.js, maîtriser les bases JavaScript côté serveur, puis livrer une version CLI d'un mini-jeu.</p>
-<p><strong>Fil rouge gamifié</strong> : <code>Campus Quest</code>, un jeu de quêtes avec XP et niveaux.</p>
+<h1>Jour 1 - Fondations Node.js et API JSON</h1>
+<p><strong>Objectif du jour</strong> : comprendre Node.js, maîtriser les bases JavaScript côté serveur, puis livrer une API JSON minimale dans sandbox-server.</p>
+<p><strong>Fil rouge technique</strong> : <code>sandbox-server</code>, une API Node.js minimale en JSON.</p>
 <p>Les mots soulignés sont définis au survol (ou au focus clavier).</p>
 
 <h2>1. Introduction historique de Node.js</h2>
@@ -68,63 +68,36 @@ th{background:#f1f2f6}
 </tbody>
 </table>
 
-<h2>3. Installation et vérification</h2>
-<h3>Étape 1 - Vérifier l'environnement</h3>
-<pre><code>node -v
-npm -v</code></pre>
-<p>Le but est de confirmer que Node.js et npm sont disponibles avant toute création de projet.</p>
 
-<h3>Étape 2 - Initialiser le projet</h3>
-<pre><code>mkdir campus-quest
-cd campus-quest
-npm init -y</code></pre>
-<p>Le fichier <code>package.json</code> est le cœur du projet : métadonnées, scripts et dépendances.</p>
+<h2>3. Mise en place sandbox-server</h2>
+<p>Pour ce jour 1, on travaille sur une sandbox serveur déjà prête. L'objectif est de manipuler un serveur Node.js et des routes HTTP JSON via des requêtes API.</p>
 
-<h3>Étape 3 - Comprendre le package.json généré</h3>
-<p>Après <code>npm init -y</code>, vous obtenez un fichier de base (exemple) :</p>
-<pre><code>{
-  "name": "campus-quest",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
-}</code></pre>
+<h3>Structure minimale utilisée</h3>
+<pre><code>sandbox-server/
+  docker-compose.yml
+  Dockerfile
+  package.json
+  src/
+    server.js</code></pre>
+<p>Le serveur expose une route <code>GET /</code> qui renvoie un JSON simple :</p>
+<pre><code>{ "hello": "world" }</code></pre>
 
-<h3>Étape 4 - Configurer le minimum pour ce cours</h3>
-<pre><code>npm pkg set type=module
-npm pkg set scripts.start=\"node src/index.js\"
-npm pkg set scripts.dev=\"node --watch src/index.js\"</code></pre>
-<p>Le champ <code>type: "module"</code> est nécessaire pour utiliser <code>import</code> dans les exemples du cours.</p>
-<div class="callout">
-<p><strong>Pourquoi écrire <code>node:</code> dans les imports ?</strong></p>
+<h3>Ce qu'on valide aujourd'hui</h3>
 <ul>
-<li><code>node:</code> indique explicitement qu'on importe un module natif de Node.js (<code>node:fs/promises</code>, <code>node:path</code>, etc.).</li>
-<li>Ça évite les ambiguïtés avec un package npm du même nom.</li>
-<li>C'est la forme recommandée dans la documentation Node moderne pour rendre l'intention claire dans le code.</li>
+<li>Comprendre le rôle de <code>src/server.js</code> comme point d'entrée backend.</li>
+<li>Créer des routes API en JSON avec Express.</li>
+<li>Vérifier les réponses HTTP depuis un navigateur ou un client API graphique.</li>
+<li>Observer le rechargement automatique du serveur en mode watch.</li>
+</ul>
+
+<div class="callout">
+<p><strong>Pourquoi cette approche ?</strong></p>
+<ul>
+<li>Elle réduit la charge cognitive au début (on se concentre sur HTTP + JSON).</li>
+<li>Elle colle au flux réel d'une API web (route, requête, réponse JSON).</li>
+<li>Elle prépare directement le Jour 2 orienté Express.</li>
 </ul>
 </div>
-
-<h3>Étape 5 - Créer le point d'entrée et lancer</h3>
-<pre><code>mkdir src
-echo "console.log('Campus Quest démarre');" > src/index.js
-npm start</code></pre>
-
-<h3>Étape 6 - package.json minimal attendu</h3>
-<pre><code>{
-  "name": "campus-quest",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "dev": "node --watch src/index.js"
-  }
-}</code></pre>
 
 <h2>4. Comprendre Node.js simplement</h2>
 <h3>Concepts à retenir</h3>
@@ -202,283 +175,131 @@ console.log("Fin sync");
 </ul>
 </div>
 
-<h2>5. Exercices guidés (correction repliée)</h2>
-<h3>Exercice 1 - Lire un JSON</h3>
-<p><strong>Consigne</strong> : lire <code>players.json</code>, parser le JSON, afficher le nombre de joueurs.</p>
+
+<h2>5. Exercices guidés API (correction repliée)</h2>
+<h3>Exercice 1 - Route Hello JSON</h3>
+<p><strong>Consigne</strong> : implémenter <code>GET /</code> qui renvoie <code>{ "hello": "world" }</code>.</p>
 <details>
 <summary>▶ Voir la correction</summary>
-<pre><code>import { readFile } from "node:fs/promises";
-
-const raw = await readFile("./data/players.json", "utf8");
-const players = JSON.parse(raw);
-console.log("Nombre de joueurs:", players.length);</code></pre>
+<pre><code>app.get("/", (_req, res) => {
+  res.status(200).json({ hello: "world" });
+});</code></pre>
 </details>
-<div class="callout">
-<p><strong>Note importante : <code>import.meta.url</code></strong></p>
-<p><code>./data/players.json</code> dépend du dossier courant d'exécution. Pour un chemin fiable (local, Docker, script npm), basez-vous sur le fichier courant :</p>
-<pre><code>import { readFile } from "node:fs/promises";
 
-const playersPath = new URL("../data/players.json", import.meta.url);
-const raw = await readFile(playersPath, "utf8");</code></pre>
-<p><code>import.meta.url</code> = URL du module en cours (équivalent robuste de <code>__dirname</code> en ESM).</p>
-</div>
-
-<h3>Exercice 2 - Lire un CSV et calculer une moyenne</h3>
-<p><strong>Consigne</strong> : à partir d'un fichier <code>scores.csv</code> (séparateur <code>;</code>), calculer la moyenne des scores.</p>
-<p>Fichier <code>scores.csv</code> attendu :</p>
-<pre><code>pseudo;score
-alice;12
-bob;18
-chris;10</code></pre>
+<h3>Exercice 2 - Route de santé</h3>
+<p><strong>Consigne</strong> : créer <code>GET /health</code> pour vérifier que le service tourne.</p>
 <details>
 <summary>▶ Voir la correction</summary>
-<pre><code>import { readFile } from "node:fs/promises";
-
-const csv = await readFile("./data/scores.csv", "utf8");
-const lines = csv.trim().split("\n").slice(1);
-const scores = lines.map(line => Number(line.split(";")[1]));
-const moyenne = scores.reduce((acc, n) => acc + n, 0) / scores.length;
-console.log("Moyenne:", moyenne.toFixed(2));</code></pre>
+<pre><code>app.get("/health", (_req, res) => {
+  res.status(200).json({
+    status: "ok",
+    timestamp: new Date().toISOString()
+  });
+});</code></pre>
 </details>
 
-<h3>Exercice 3 - Écrire une fonction de stats</h3>
-<p><strong>Consigne</strong> : écrire une fonction <code>stats(values)</code> qui retourne <code>min</code>, <code>max</code> et <code>avg</code>.</p>
+<h3>Exercice 3 - Paramètre dynamique</h3>
+<p><strong>Consigne</strong> : créer <code>GET /hello/:name</code> qui répond <code>{ "hello": "Alice" }</code> quand l'URL est <code>/hello/Alice</code>.</p>
 <details>
 <summary>▶ Voir la correction</summary>
-<pre><code>function stats(values) {
-  const total = values.reduce((acc, n) => acc + n, 0);
-  return {
-    min: Math.min(...values),
-    max: Math.max(...values),
-    avg: total / values.length
-  };
-}
-
-console.log(stats([12, 18, 10, 16]));</code></pre>
+<pre><code>app.get("/hello/:name", (req, res) => {
+  const { name } = req.params;
+  res.status(200).json({ hello: name });
+});</code></pre>
 </details>
 
-<h3>Exercice 4 - Gérer le fichier absent</h3>
-<p><strong>Consigne</strong> : créer une fonction qui lit un JSON et renvoie <code>[]</code> si le fichier n'existe pas.</p>
+<h3>Exercice 4 - Réponse 404 JSON</h3>
+<p><strong>Consigne</strong> : retourner un JSON explicite quand la route n'existe pas.</p>
 <details>
 <summary>▶ Voir la correction</summary>
-<pre><code>import { readFile } from "node:fs/promises";
-
-async function readJsonSafe(path) {
-  try {
-    const raw = await readFile(path, "utf8");
-    return JSON.parse(raw);
-  } catch (err) {
-    if (err.code === "ENOENT") return [];
-    throw err;
-  }
-}</code></pre>
+<pre><code>app.use((_req, res) => {
+  res.status(404).json({ error: "Route not found" });
+});</code></pre>
 </details>
 
-<h2>6. Structurer Campus Quest (CLI)</h2>
-<h3>C'est quoi Campus Quest ?</h3>
-<p>Campus Quest est un mini-jeu en ligne de commande. Vous devez coder une CLI qui manipule deux fichiers JSON (<code>players.json</code> et <code>quests.json</code>) pour simuler la progression d'un joueur.</p>
-<p><strong>Principe</strong> : un joueur accepte des quêtes, les valide, gagne de l'XP, puis monte de niveau.</p>
-<p><strong>Qu'est-ce qu'une quête ?</strong> Une quête est une mission avec un identifiant, un intitulé et une récompense d'XP. Exemple: <code>q-intro-io</code> = "Lire un fichier JSON" = 20 XP.</p>
-<p><strong>Différence importante</strong> :</p>
-<ul>
-<li><code>quests.json</code> = catalogue global des quêtes disponibles (source de vérité).</li>
-<li><code>players.json</code> = progression de chaque joueur (quêtes acceptées/terminées, XP, niveau).</li>
-</ul>
-<div class="callout">
-<p><strong>Ce que vous devez faire concrètement</strong></p>
-<ol>
-<li>Créer un joueur (pseudo unique).</li>
-<li>Lui attribuer une ou plusieurs quêtes existantes.</li>
-<li>Valider une quête pour ajouter de l'XP.</li>
-<li>Afficher ses stats (XP, niveau, quêtes) puis un classement simple.</li>
-</ol>
-</div>
-<p><strong>Entrée</strong> : commandes terminal (ex: <code>node src/cli.js create-player Alice</code>).<br>
-<strong>Sortie</strong> : messages CLI lisibles + données persistées correctement dans les JSON.</p>
-<h3>Exemple de données attendues</h3>
-<pre><code>// quests.json
-[
-  { "id": "q-intro-io", "title": "Lire un fichier JSON", "difficulty": "easy", "xp": 20 },
-  { "id": "q-api-1", "title": "Créer une route GET /players", "difficulty": "medium", "xp": 40 }
-]
-
-// players.json
-[
-  {
-    "id": "p-alice",
-    "pseudo": "Alice",
-    "xp": 20,
-    "level": 1,
-    "acceptedQuests": ["q-intro-io"],
-    "completedQuests": ["q-intro-io"]
-  }
-]</code></pre>
-<p>Lecture du scénario: Alice accepte la quête <code>q-intro-io</code>, la termine, passe à 20 XP, et sa progression est enregistrée dans <code>players.json</code>.</p>
-
+<h2>6. Structurer la sandbox-server</h2>
 <h3>Arborescence cible</h3>
-<pre><code>campus-quest/
+<pre><code>sandbox-server/
+  docker-compose.yml
+  Dockerfile
   package.json
   src/
-    cli.js
-    store.js
-    game-service.js
-  data/
-    players.json
-    quests.json</code></pre>
+    server.js</code></pre>
 
-<h3>Rôle précis de chaque fichier</h3>
+<h3>Rôle de chaque fichier</h3>
 <ul>
-<li><code>package.json</code> : configuration du projet (type ESM, scripts npm, dépendances).</li>
-<li><code>src/cli.js</code> : point d'entrée terminal; lit <code>process.argv</code>, route la commande, affiche le résultat.</li>
-<li><code>src/game-service.js</code> : logique métier (création joueur, attribution/validation de quête, calcul XP/niveau).</li>
-<li><code>src/store.js</code> : accès aux fichiers JSON (lecture/écriture, gestion d'erreurs I/O).</li>
-<li><code>data/quests.json</code> : catalogue des quêtes disponibles (id, titre, difficulté, XP).</li>
-<li><code>data/players.json</code> : état des joueurs (pseudo, XP, niveau, quêtes acceptées/terminées).</li>
+<li><code>docker-compose.yml</code> : décrit le service, les ports et le volume de code.</li>
+<li><code>Dockerfile</code> : construit l'image Node.js de développement.</li>
+<li><code>package.json</code> : dépendances et métadonnées du projet.</li>
+<li><code>src/server.js</code> : routes HTTP et logique de réponse JSON.</li>
 </ul>
-<p><strong>Règle d'architecture</strong> : <code>cli.js</code> ne contient pas les règles de jeu; il appelle <code>game-service.js</code>, qui lui-même passe par <code>store.js</code> pour persister les données.</p>
-<p><strong>Version concrète (exemple)</strong> pour <code>node src/cli.js create-player Alice</code> :</p>
-<ol>
-<li><code>cli.js</code> lit la commande <code>create-player</code> et le pseudo <code>Alice</code>.</li>
-<li><code>cli.js</code> appelle <code>createPlayer("Alice")</code> dans <code>game-service.js</code>.</li>
-<li><code>game-service.js</code> vérifie les règles (pseudo valide, unicité, etc.).</li>
-<li><code>store.js</code> lit puis écrit <code>players.json</code>.</li>
-<li><code>cli.js</code> affiche "Joueur créé".</li>
-</ol>
-
-<h3>Fonctions à implémenter</h3>
-<ul>
-<li><code>createPlayer(pseudo)</code></li>
-<li><code>acceptQuest(playerId, questId)</code></li>
-<li><code>completeQuest(playerId, questId)</code></li>
-<li><code>showStats(playerId)</code></li>
-</ul>
-
-<h3>Exemple simple guidé : premier <code>cli.js</code></h3>
-<p>Objectif : comprendre le rôle de <code>cli.js</code> avant la version complète Campus Quest.</p>
-<pre><code>const [, , command, name] = process.argv;
-
-if (command === "hello") {
-  console.log(`Bonjour ${name ?? "inconnu"}`);
-} else if (command === "help" || !command) {
-  console.log("Usage: node src/cli.js hello &lt;prenom&gt;");
-} else {
-  console.log(`Commande inconnue: ${command}`);
-  process.exitCode = 1;
-}</code></pre>
-<p><strong>Pourquoi <code>[, , command, name]</code> ?</strong> Les deux premières valeurs de <code>process.argv</code> ne sont pas des arguments métier :</p>
-<ul>
-<li><code>process.argv[0]</code> = chemin vers l'exécutable Node.</li>
-<li><code>process.argv[1]</code> = chemin vers le fichier exécuté (<code>src/cli.js</code>).</li>
-<li><code>process.argv[2]</code> = votre première vraie donnée utilisateur (ici <code>command</code>).</li>
-<li><code>process.argv[3]</code> = la suivante (ici <code>name</code>).</li>
-</ul>
-<p>Test rapide :</p>
-<pre><code>node src/cli.js help
-node src/cli.js hello Alice
-node src/cli.js test</code></pre>
-<p>Ce pattern (lire <code>process.argv</code> → router la commande → afficher le résultat) est exactement celui de Campus Quest.</p>
-
-<h3>Lire et écrire un fichier JSON (indispensable)</h3>
-<p>Dans Campus Quest, tout passe par <code>store.js</code>. Voici la base minimale attendue :</p>
-<pre><code>import { readFile, writeFile } from "node:fs/promises";
-
-export async function loadJson(path) {
-  try {
-    const raw = await readFile(path, "utf8");
-    return JSON.parse(raw);
-  } catch (err) {
-    if (err.code === "ENOENT") return [];
-    throw err;
-  }
-}
-
-export async function saveJson(path, data) {
-  const pretty = JSON.stringify(data, null, 2);
-  await writeFile(path, `${pretty}\n`, "utf8");
-}</code></pre>
-<p>Exemple d'utilisation dans une commande :</p>
-<pre><code>const players = await loadJson("./data/players.json");
-players.push({ id: "p-alice", pseudo: "Alice", xp: 0, level: 1 });
-await saveJson("./data/players.json", players);</code></pre>
-<p><strong>À retenir</strong> : on lit d'abord, on modifie en mémoire, puis on réécrit le fichier.</p>
-
-<h2>7. Exercices progressifs</h2>
-<h3>Niveau 1 - Mise en route technique</h3>
-<table>
-<thead><tr><th>Exercice</th><th>Consigne</th><th>Validation attendue</th></tr></thead>
-<tbody>
-<tr><td>1.1</td><td>Créer <code>players.json</code> et <code>quests.json</code> avec données initiales cohérentes.</td><td>Les deux fichiers sont parsés sans erreur JSON.</td></tr>
-<tr><td>1.2</td><td>Écrire <code>loadJson(path)</code> et <code>saveJson(path, data)</code>.</td><td>Lecture/écriture testées sur les deux fichiers.</td></tr>
-<tr><td>1.3</td><td>Gérer le cas fichier absent : retourner un tableau vide.</td><td>Aucune exception non gérée.</td></tr>
-<tr><td>1.4</td><td>Normaliser les pseudos (trim + unicité).</td><td>Impossible de créer deux pseudos équivalents.</td></tr>
-</tbody>
-</table>
-
-<h3>Niveau 2 - Logique métier</h3>
-<table>
-<thead><tr><th>Exercice</th><th>Consigne</th><th>Compétence visée</th></tr></thead>
-<tbody>
-<tr><td>2.1</td><td>Coder <code>createPlayer(pseudo)</code> avec validations complètes.</td><td>Validation d'entrée</td></tr>
-<tr><td>2.2</td><td>Coder <code>acceptQuest(playerId, questId)</code> avec contrôle d'existence.</td><td>Référentiel métier</td></tr>
-<tr><td>2.3</td><td>Coder <code>completeQuest</code> et incrémenter XP selon difficulté.</td><td>Règles de calcul</td></tr>
-<tr><td>2.4</td><td>Calculer <code>level</code> à partir de XP.</td><td>Conditions + fonctions</td></tr>
-<tr><td>2.5</td><td>Empêcher la validation d'une même quête deux fois.</td><td>Intégrité des données</td></tr>
-</tbody>
-</table>
-
-<h3>Niveau 3 - Robustesse CLI</h3>
-<ol>
-<li>Afficher une aide complète si la commande est inconnue.</li>
-<li>Valider le format de chaque argument CLI.</li>
-<li>Retourner un code de sortie non nul en cas d'erreur d'usage.</li>
-<li>Ajouter des messages de succès homogènes.</li>
-</ol>
 
 <div class="callout">
-<p><strong>Barème conseillé (auto-évaluation)</strong></p>
-<ul>
-<li>Technique : 10 points</li>
-<li>Qualité : 5 points</li>
-<li>Fiabilité : 5 points</li>
-</ul>
+<p><strong>Règle d'architecture</strong> : tout ce qui concerne HTTP vit dans <code>src/server.js</code> (routes, statuts, payload JSON).</p>
 </div>
 
-<h2>8. Défis gamifiés du jour</h2>
+<h2>7. Exercices progressifs</h2>
+<p>Objectif : avancer par toutes petites étapes, valider chaque point, puis passer au suivant.</p>
+
+<h3>Mini-exos (très progressifs)</h3>
+<table>
+<thead><tr><th>Exo</th><th>Consigne</th><th>Résultat attendu</th></tr></thead>
+<tbody>
+<tr><td>7.1</td><td>Démarrer le serveur et vérifier qu'il écoute sur le port <code>3000</code>.</td><td>Le serveur tourne sans erreur.</td></tr>
+<tr><td>7.2</td><td>Créer la route <code>GET /</code>.</td><td>Réponse <code>200</code> avec <code>{"hello":"world"}</code>.</td></tr>
+<tr><td>7.3</td><td>Créer la route <code>GET /health</code>.</td><td>Réponse <code>200</code> avec <code>{"status":"ok"}</code>.</td></tr>
+<tr><td>7.4</td><td>Ajouter un champ <code>timestamp</code> dans <code>/health</code>.</td><td>JSON avec une date ISO valide.</td></tr>
+<tr><td>7.5</td><td>Créer <code>GET /hello/:name</code>.</td><td><code>/hello/Ada</code> renvoie <code>{"hello":"Ada"}</code>.</td></tr>
+<tr><td>7.6</td><td>Si <code>:name</code> est vide ou invalide, renvoyer une erreur claire.</td><td>Réponse <code>400</code> JSON avec message d'erreur.</td></tr>
+<tr><td>7.7</td><td>Ajouter un fallback pour les routes inconnues.</td><td>Réponse <code>404</code> JSON homogène.</td></tr>
+<tr><td>7.8</td><td>Uniformiser toutes les réponses d'erreur sous la forme <code>{"error":"..."}</code>.</td><td>Même format d'erreur sur toute l'API.</td></tr>
+</tbody>
+</table>
+
+<h3>Validation rapide de fin</h3>
+<ol>
+<li>Toutes les routes utiles répondent en JSON.</li>
+<li>Les codes HTTP sont cohérents (<code>200</code>, <code>400</code>, <code>404</code>).</li>
+<li>Aucune réponse HTML/texte brute n'est renvoyée par erreur.</li>
+<li>Une modification de <code>src/server.js</code> déclenche bien le redémarrage en watch.</li>
+</ol>
+
+<h2>8. Défis du jour</h2>
 <table>
 <thead><tr><th>Défi</th><th>Objectif</th><th>Points</th></tr></thead>
 <tbody>
-<tr><td>Défi 1</td><td>Créer un joueur et l'enregistrer en JSON</td><td>3</td></tr>
-<tr><td>Défi 2</td><td>Ajouter une quête avec difficulté</td><td>4</td></tr>
-<tr><td>Défi 3</td><td>Compléter une quête et ajouter l'XP</td><td>6</td></tr>
-<tr><td>Défi bonus</td><td>Afficher un niveau calculé depuis l'XP</td><td>2</td></tr>
+<tr><td>Défi 1</td><td>Route Hello JSON propre</td><td>3</td></tr>
+<tr><td>Défi 2</td><td>Route dynamique avec paramètre</td><td>4</td></tr>
+<tr><td>Défi 3</td><td>Gestion d'erreur homogène</td><td>6</td></tr>
+<tr><td>Défi bonus</td><td>Ajouter des métadonnées (timestamp)</td><td>2</td></tr>
 </tbody>
 </table>
 <p><strong>Système de rang</strong> : Bronze (0-6), Argent (7-11), Or (12+).</p>
 
 <h2>9. Mini-projet de fin de Jour 1</h2>
-<p>Livrer une CLI Campus Quest utilisable par une autre personne de la classe avec ce scénario :</p>
+<p>Livrer une API minimale dans la sandbox serveur avec ce scénario :</p>
 <ol>
-<li>Créer un joueur</li>
-<li>Lui attribuer 2 quêtes</li>
-<li>Valider une quête</li>
-<li>Afficher son profil + leaderboard</li>
+<li>Servir <code>GET /</code> en JSON.</li>
+<li>Servir <code>GET /health</code> en JSON.</li>
+<li>Servir <code>GET /hello/:name</code> en JSON.</li>
+<li>Retourner du JSON sur route inexistante.</li>
 </ol>
 <p><strong>Critères de réussite</strong></p>
 <ul>
-<li>Le scénario fonctionne sans modifier le code pendant la démo.</li>
-<li>Les erreurs utilisateur sont correctement gérées.</li>
-<li>Le code est découpé en modules (store, service, cli).</li>
-<li>Le fichier JSON reste valide après 20 exécutions successives.</li>
+<li>Toutes les routes répondent avec le bon statut HTTP.</li>
+<li>Le format JSON reste cohérent partout.</li>
+<li>Le code est lisible et modulaire à l'échelle du jour 1.</li>
+<li>Le serveur redémarre correctement après modification.</li>
 </ul>
 
 <h2>10. Checklist de fin de journée</h2>
 <div class="check">
 <p>Vérifier avant de passer au Jour 2 :</p>
 <ul>
-<li>Le projet se lance avec <code>npm start</code>.</li>
-<li>Les commandes CLI principales fonctionnent.</li>
-<li>Les données JSON sont mises à jour correctement.</li>
-<li>Les erreurs d'usage affichent une aide claire.</li>
+<li>La sandbox-server démarre correctement.</li>
+<li>La route <code>/</code> répond <code>{"hello":"world"}</code>.</li>
+<li>La route <code>/health</code> répond en JSON.</li>
+<li>Les erreurs HTTP sont renvoyées en JSON.</li>
 </ul>
 </div>
 
@@ -494,7 +315,7 @@ await saveJson("./data/players.json", players);</code></pre>
 <tr><td>Macrotask</td><td>Tâche exécutée ensuite (ex: setTimeout).</td></tr>
 <tr><td>Thread pool</td><td>Pool de threads utilisé par libuv pour certaines opérations.</td></tr>
 <tr><td>ESM</td><td>Système de modules JavaScript moderne basé sur <code>import/export</code>.</td></tr>
-<tr><td>CLI</td><td>Command Line Interface : interface via terminal.</td></tr>
+<tr><td>API HTTP</td><td>Interface exposée via des routes accessibles en requêtes HTTP.</td></tr>
 <tr><td>JSON</td><td>Format texte structuré utilisé pour stocker/échanger des données.</td></tr>
 </tbody>
 </table>
