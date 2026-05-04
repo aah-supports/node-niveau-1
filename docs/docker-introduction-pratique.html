@@ -157,6 +157,15 @@ services:
     command: sh -c "tail -f /dev/null"
     stdin_open: true
     tty: true</code></pre>
+<div class="callout">
+<p><strong>Pourquoi ce conteneur reste actif ?</strong></p>
+<ul>
+<li>Un conteneur Docker vit tant que son processus principal (<code>PID 1</code>) tourne.</li>
+<li>Dans <code>sandbox-node</code>, <code>command: sh -c "tail -f /dev/null"</code> lance un processus volontairement infini : le conteneur reste disponible pour exécuter des commandes CLI avec <code>docker compose exec node ...</code>.</li>
+<li><code>stdin_open: true</code> et <code>tty: true</code> facilitent les interactions terminal (shell, saisie interactive, affichage propre).</li>
+</ul>
+<p><strong>Pourquoi un conteneur s'arrête par défaut ?</strong> Si le processus principal se termine (commande finie, crash, erreur), Docker arrête le conteneur automatiquement.</p>
+</div>
 
 <h3>7.2 Exemple complet : <code>sandbox-server</code> (API Express)</h3>
 <p>Fichiers réels utilisés pour la configuration serveur HTTP :</p>
