@@ -1,0 +1,30 @@
+[
+    {
+      "id": 1,
+      "name": "Antoine",
+      "score": 1200,
+      "level": "intermediate",
+      "active": true
+    },
+    {
+      "id": 2,
+      "name": "Sion",
+      "score": 1450,
+      "level": "advanced",
+      "active": true
+    },
+    {
+      "id": 3,
+      "name": "Michel",
+      "score": 900,
+      "level": "beginner",
+      "active": false
+    },
+    {
+      "id": 4,
+      "name": "Aurélien",
+      "score": 1600,
+      "level": "expert",
+      "active": true
+    }
+  ]

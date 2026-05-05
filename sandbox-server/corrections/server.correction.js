@@ -7,9 +7,9 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-const playersPath = new URL("../../data/correction/players.json", import.meta.url);
-const enigmesPath = new URL("../../data/correction/enigmes.json", import.meta.url);
-const attemptsPath = new URL("../../data/correction/attempts.json", import.meta.url);
+const playersPath = new URL("../data/correction/players.json", import.meta.url);
+const enigmesPath = new URL("../data/correction/enigmes.json", import.meta.url);
+const attemptsPath = new URL("../data/correction/attempts.json", import.meta.url);
 
 const DEFAULT_ENIGMES = [
   {

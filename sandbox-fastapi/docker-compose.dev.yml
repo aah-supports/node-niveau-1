@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: sandbox-fastapi-postgres-dev
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: appdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - fastapi_postgres_data_dev:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      target: dev
+    container_name: sandbox-fastapi-backend-dev
+    environment:
+      DATABASE_URL: postgresql+psycopg2://app:app@postgres:5432/appdb
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    container_name: sandbox-fastapi-frontend-dev
+    environment:
+      VITE_API_URL: http://localhost:8000/api
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  fastapi_postgres_data_dev:

@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: sandbox-fastapi-postgres-prod
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: appdb
+    volumes:
+      - fastapi_postgres_data_prod:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      target: prod
+    container_name: sandbox-fastapi-backend-prod
+    environment:
+      DATABASE_URL: postgresql+psycopg2://app:app@postgres:5432/appdb
+    expose:
+      - "8000"
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+      target: prod
+    container_name: sandbox-fastapi-frontend-prod
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  fastapi_postgres_data_prod:

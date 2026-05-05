@@ -2,6 +2,7 @@ services:
   app:
     build:
       context: .
+    container_name: app_node
     ports:
       - "3000:3000"
     volumes:
@@ -9,3 +10,4 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+    command: npm run dev

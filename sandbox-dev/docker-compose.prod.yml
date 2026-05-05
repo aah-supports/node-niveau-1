@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: sandbox-dev-postgres-prod
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: appdb
+    volumes:
+      - node_postgres_data_prod:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      target: prod
+    container_name: sandbox-dev-backend-prod
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://app:app@postgres:5432/appdb
+    expose:
+      - "3000"
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+      target: prod
+    container_name: sandbox-dev-frontend-prod
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+
+volumes:
+  node_postgres_data_prod:

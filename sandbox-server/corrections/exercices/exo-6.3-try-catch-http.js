@@ -1,8 +1,8 @@
 import { readFile, writeFile } from "node:fs/promises";
 
-const playersPath = new URL("../../../data/correction/players.json", import.meta.url);
-const enigmesPath = new URL("../../../data/correction/enigmes.json", import.meta.url);
-const attemptsPath = new URL("../../../data/correction/attempts.json", import.meta.url);
+const playersPath = new URL("../../data/correction/players.json", import.meta.url);
+const enigmesPath = new URL("../../data/correction/enigmes.json", import.meta.url);
+const attemptsPath = new URL("../../data/correction/attempts.json", import.meta.url);
 
 function normalize(text) {
   return String(text ?? "").trim().toLowerCase();

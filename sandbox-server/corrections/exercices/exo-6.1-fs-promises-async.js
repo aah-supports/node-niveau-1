@@ -9,7 +9,7 @@ export function registerExo61Routes(app) {
       console.log("[demo-async] A - début route");
 
       const start = Date.now();
-      const raw = await readFile(new URL("../../../data/correction/enigmes.json", import.meta.url), "utf8");
+      const raw = await readFile(new URL("../../data/correction/enigmes.json", import.meta.url), "utf8");
       const enigmes = JSON.parse(raw);
       const durationMs = Date.now() - start;
 

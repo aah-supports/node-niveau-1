@@ -5,7 +5,7 @@ Cette correction montre une version 100% API (sans CLI) avec persistance JSON.
 ## Lancer la correction
 
 ```bash
-node src/correction/server.correction.js
+node corrections/server.correction.js
 ```
 
 ## Fichiers de données utilisés

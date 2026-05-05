@@ -16,4 +16,4 @@ Ce dossier contient des corrections ciblées pour :
 
 Ces fichiers sont des extraits de correction :
 - soit vous les montrez en classe,
-- soit vous copiez les routes/fonctions dans `src/correction/server.correction.js`.
+- soit vous copiez les routes/fonctions dans `corrections/server.correction.js`.

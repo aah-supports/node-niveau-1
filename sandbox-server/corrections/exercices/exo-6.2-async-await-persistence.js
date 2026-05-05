@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 
-const playersPath = new URL("../../../data/correction/players.json", import.meta.url);
+const playersPath = new URL("../../data/correction/players.json", import.meta.url);
 
 export async function loadPlayers() {
   const raw = await readFile(playersPath, "utf8");
