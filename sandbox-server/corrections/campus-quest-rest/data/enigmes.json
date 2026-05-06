@@ -12,5 +12,12 @@
     "statement": "Plus j'ai de gardiens, moins je suis en sécurité. Qui suis-je ?",
     "answer": "secret",
     "xp": 40
+  },
+  {
+    "id": "e3",
+    "title": "L'ombre",
+    "statement": "Je te suis le jour, je te quitte la nuit. Qui suis-je ?",
+    "answer": "ombre",
+    "xp": 30
   }
 ]
